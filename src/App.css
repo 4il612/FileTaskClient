@@ -87,3 +87,14 @@ layout {
   width: 200px;
   justify-content: space-between;
 }
+
+.taskCard {
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid rgb(197, 197, 197);
+  min-height: 80px;
+  border-radius: 24px;
+  padding: 20px;
+  margin-bottom: 12px;
+  align-items: center;
+}
