@@ -21,7 +21,9 @@ const FilesPage = () => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   return (
     <>
-      <button className="updateBTN">UPD</button>
+      <button className="updateBTN" onClick={() => setIsLoading(true)}>
+        UPD
+      </button>
       <button
         className="addFileBTN"
         onClick={() => {
