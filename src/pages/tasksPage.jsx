@@ -20,6 +20,7 @@ const TasksPage = () => {
   return (
     <>
       <button className="updateBTN">UPD</button>
+      <button className="addFileBTN">ADD</button>
       <div className="layout">
         <Table>
           {cardsTMP.map((card) => {

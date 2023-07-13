@@ -17,9 +17,19 @@ const FilesPage = () => {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {}, [isLoading]); //реализация аджакс запроса с поулчением списка задач
+
+  const [isModalOpened, setIsModalOpened] = useState(false);
   return (
     <>
       <button className="updateBTN">UPD</button>
+      <button
+        className="addFileBTN"
+        onClick={() => {
+          setIsModalOpened(true);
+        }}
+      >
+        ADD
+      </button>
       <div className="layout">
         <Table>
           {cardsTMP.map((card) => {
@@ -28,6 +38,20 @@ const FilesPage = () => {
         </Table>
       </div>
       <Navbar />
+      {isModalOpened && (
+        <div className="addFileModal">
+          <div className="addFileModal__window">
+            <input type="file" />
+            <button
+              onClick={() => {
+                setIsModalOpened(false);
+              }}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
