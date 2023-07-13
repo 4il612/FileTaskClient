@@ -1,19 +1,37 @@
+import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import Table from "../components/table";
 import TaskCard from "../components/taskCard";
 
 const TasksPage = () => {
+  const cardsTMP = [
+    { id: 1, task: "resizing", status: "pending", source: "img1.jpg" },
+    { id: 1, task: "resizing", status: "pending", source: "img1.jpg" },
+    { id: 1, task: "resizing", status: "pending", source: "img1.jpg" },
+    { id: 1, task: "resizing", status: "pending", source: "img1.jpg" },
+    { id: 1, task: "resizing", status: "pending", source: "img1.jpg" },
+    { id: 1, task: "resizing", status: "pending", source: "img1.jpg" },
+    { id: 1, task: "resizing", status: "pending", source: "img1.jpg" },
+    { id: 1, task: "resizing", status: "pending", source: "img1.jpg" },
+  ];
+  const [cards, setCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {}, [isLoading]); //реализация аджакс запроса с поулчением списка задач
   return (
     <>
       <button className="updateBTN">UPD</button>
       <div className="layout">
         <Table>
-          <TaskCard id={1} task={"resize"} status={"processing"} />
-          <TaskCard id={2} task={"resize"} status={"processing"} />
-          <TaskCard id={3} status={"processing"} task={"resize"} />
-          <TaskCard id={4} status={"processing"} task={"resize"} />
-          <TaskCard id={5} status={"processing"} task={"resize"} />
-          <TaskCard id={6} status={"processing"} task={"resize"} />
+          {cardsTMP.map((card) => {
+            return (
+              <TaskCard
+                id={card.id}
+                task={card.task}
+                status={card.status}
+                sourceImage={card.source}
+              />
+            );
+          })}
         </Table>
 
         <Navbar />

@@ -21,7 +21,11 @@ const TaskCard = ({ id, task, status, sourceImage }) => {
         <div className="taskCard__collapse">
           <div className="taskCard__previousWrapper">
             <div className="taskCard__previousLabel">Source image</div>
-            <img className="taskCard__previousImage" alt="kek" src="img1.jpg" />
+            <img
+              className="taskCard__previousImage"
+              alt="kek"
+              src={sourceImage}
+            />
           </div>
           <button className="taskCard__downloadBTN">
             DOWNLOAD PROCESSED IMAGE
