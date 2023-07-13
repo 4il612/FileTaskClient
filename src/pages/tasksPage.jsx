@@ -5,6 +5,7 @@ import TaskCard from "../components/taskCard";
 const TasksPage = () => {
   return (
     <>
+      <button className="updateBTN">UPD</button>
       <div className="layout">
         <Table>
           <TaskCard id={1} task={"resize"} status={"processing"} />

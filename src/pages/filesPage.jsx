@@ -5,6 +5,7 @@ import Table from "../components/table";
 const FilesPage = () => {
   return (
     <>
+      <button className="updateBTN">UPD</button>
       <div className="layout">
         <Table>
           <FileCard></FileCard>

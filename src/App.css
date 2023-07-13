@@ -131,3 +131,17 @@ layout {
 .taskCard__downloadBTN {
   max-height: 20px;
 }
+
+.updateBTN {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 24px;
+}
+
+.updateBTN:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 40px #8888886a;
+}
