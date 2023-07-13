@@ -16,11 +16,19 @@ const TasksPage = () => {
   ];
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpened, setIsModalOpened] = useState(false);
   useEffect(() => {}, [isLoading]); //реализация аджакс запроса с поулчением списка задач
   return (
     <>
       <button className="updateBTN">UPD</button>
-      <button className="addFileBTN">ADD</button>
+      <button
+        className="addFileBTN"
+        onClick={() => {
+          setIsModalOpened(true);
+        }}
+      >
+        ADD
+      </button>
       <div className="layout">
         <Table>
           {cardsTMP.map((card) => {
@@ -34,9 +42,23 @@ const TasksPage = () => {
             );
           })}
         </Table>
-
-        <Navbar />
       </div>
+      <Navbar />
+      {isModalOpened && (
+        <div className="addModal">
+          <div className="addModal__window">
+            {/* здесь должны быть инпуты с выбором из файлов и алгоритмов
+            обработки */}
+            <button
+              onClick={() => {
+                setIsModalOpened(false);
+              }}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

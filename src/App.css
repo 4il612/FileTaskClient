@@ -160,7 +160,7 @@ layout {
   box-shadow: 0px 0px 40px #88888886;
 }
 
-.addFileModal {
+.addModal {
   position: fixed;
   top: 0;
   left: 0;
@@ -172,7 +172,7 @@ layout {
   height: 100%;
 }
 
-.addFileModal__window {
+.addModal__window {
   display: flex;
   flex-direction: column;
   justify-content: space-around;

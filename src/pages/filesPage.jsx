@@ -39,8 +39,8 @@ const FilesPage = () => {
       </div>
       <Navbar />
       {isModalOpened && (
-        <div className="addFileModal">
-          <div className="addFileModal__window">
+        <div className="addModal">
+          <div className="addModal__window">
             <input type="file" />
             <button
               onClick={() => {
