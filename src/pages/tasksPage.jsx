@@ -66,7 +66,7 @@ const TasksPage = () => {
                 </select>
               </div>
               <div className="addModal__selectWrapper">
-                <label for="action">action</label>
+                <label for="action">file</label>
                 <select
                   onChange={(e) => {
                     setSelectedFileID(e.target.value);
