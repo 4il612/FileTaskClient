@@ -4,33 +4,29 @@ import Table from "../components/table";
 import TaskCard from "../components/taskCard";
 
 const TasksPage = () => {
-  const filesTMP = [
-    { id: 1, title: "asd" },
-    { id: 2, title: "asd" },
-    { id: 3, title: "asd" },
-    { id: 4, title: "asd" },
-    { id: 5, title: "asd" },
-    { id: 6, title: "asd" },
-    { id: 7, title: "asd" },
-    { id: 8, title: "asd" },
-  ];
-  const cardsTMP = [
-    { id: 1, task: "resizing", status: "finished", source: "img1.jpg" },
-    { id: 1, task: "resizing", status: "finished", source: "img1.jpg" },
-    { id: 1, task: "resizing", status: "finished", source: "img1.jpg" },
-    { id: 1, task: "resizing", status: "finished", source: "img1.jpg" },
-    { id: 1, task: "resizing", status: "finished", source: "img1.jpg" },
-    { id: 1, task: "resizing", status: "finished", source: "img1.jpg" },
-    { id: 1, task: "resizing", status: "finished", source: "img1.jpg" },
-    { id: 1, task: "resizing", status: "finished", source: "img1.jpg" },
-  ];
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState("");
+  const [selectedFileID, setSelectedFileID] = useState(0);
   const [cards, setCards] = useState([]);
+  const [files, setFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpened, setIsModalOpened] = useState(false);
-  useEffect(() => {}, [isLoading]); //реализация аджакс запроса с поулчением списка задач
+  useEffect(() => {
+    if (isModalOpened === true) {
+      fetch(`${process.env.HOST}/file-server`).then((r) =>
+        r.json().then((data) => setFiles(data))
+      );
+    }
+  }, [isModalOpened]);
+  useEffect(() => {
+    fetch(`${process.env.HOST}/image-processing/`).then((r) => {
+      r.json().then((data) => {
+        setCards(data);
+      });
+    });
+  }, [isLoading]);
   return (
     <>
-      <button className="updateBTN" onClick={() => setIsLoading(true)}>
+      <button className="updateBTN" onClick={() => setIsLoading(!isLoading)}>
         UPD
       </button>
       <button
@@ -44,11 +40,11 @@ const TasksPage = () => {
       <div className="layout">
         <div className="clickAttention">Click on any card to see more...</div>
         <Table>
-          {cardsTMP.map((card) => {
+          {cards.map((card) => {
             return (
               <TaskCard
                 id={card.id}
-                task={card.task}
+                task={card.algorithm}
                 status={card.status}
                 sourceImage={card.source}
               />
@@ -60,8 +56,6 @@ const TasksPage = () => {
       {isModalOpened && (
         <div className="addModal">
           <div className="addModal__window">
-            {/* здесь должны быть инпуты с выбором из файлов и алгоритмов
-            обработки */}
             <div className="addModal__optionsWrapper">
               <div className="addModal__selectWrapper">
                 <label for="action">action</label>
@@ -73,8 +67,13 @@ const TasksPage = () => {
               </div>
               <div className="addModal__selectWrapper">
                 <label for="action">action</label>
-                <select name="file">
-                  {filesTMP.map((file) => {
+                <select
+                  onChange={(e) => {
+                    setSelectedFileID(e.target.value);
+                  }}
+                  name="file"
+                >
+                  {files.map((file) => {
                     return <option value={file.id}>{file.id}</option>;
                   })}
                 </select>
@@ -82,6 +81,17 @@ const TasksPage = () => {
             </div>
             <button
               onClick={() => {
+                fetch(`${process.env.HOST}/image-processing`, {
+                  method: "POST",
+                  body: JSON.stringify({
+                    file_ids: [Number(selectedFileID)],
+                    algorithm: selectedAlgorithm,
+                    params: {
+                      width: 128,
+                      height: 128,
+                    },
+                  }),
+                });
                 setIsModalOpened(false);
               }}
             >

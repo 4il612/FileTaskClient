@@ -4,24 +4,20 @@ import Table from "../components/table";
 import { useEffect, useState } from "react";
 
 const FilesPage = () => {
-  const cardsTMP = [
-    { id: 1, title: "asd" },
-    { id: 1, title: "asd" },
-    { id: 1, title: "asd" },
-    { id: 1, title: "asd" },
-    { id: 1, title: "asd" },
-    { id: 1, title: "asd" },
-    { id: 1, title: "asd" },
-    { id: 1, title: "asd" },
-  ];
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {}, [isLoading]); //реализация аджакс запроса с поулчением списка задач
+  useEffect(() => {
+    fetch(`${process.env.HOST}/file-server/`).then((r) => {
+      r.json().then((data) => {
+        setCards(data);
+      });
+    });
+  }, [isLoading]); //реализация аджакс запроса с поулчением списка задач
 
   const [isModalOpened, setIsModalOpened] = useState(false);
   return (
     <>
-      <button className="updateBTN" onClick={() => setIsLoading(true)}>
+      <button className="updateBTN" onClick={() => setIsLoading(!isLoading)}>
         UPD
       </button>
       <button
@@ -34,8 +30,8 @@ const FilesPage = () => {
       </button>
       <div className="layout">
         <Table>
-          {cardsTMP.map((card) => {
-            return <FileCard title={card.title} id={card.id} />;
+          {cards.map((card) => {
+            return <FileCard title={card.name} id={card.id} />;
           })}
         </Table>
       </div>
@@ -43,9 +39,16 @@ const FilesPage = () => {
       {isModalOpened && (
         <div className="addModal">
           <div className="addModal__window">
-            <input type="file" />
+            <input name="file" type="file" />
             <button
               onClick={() => {
+                const inputFile = document.querySelector('input[type="file"]');
+                const formData = new FormData();
+                formData.append("file", inputFile.files[0]);
+                fetch(`${process.env.HOST}/file-server/`, {
+                  method: "POST",
+                  body: formData,
+                });
                 setIsModalOpened(false);
               }}
             >
